@@ -179,7 +179,7 @@ def get_lag_adjusted_curvature(CP, v_ego, steerAng , psis, curvatures, curvature
     max_k_v = 1.0 + (max_k_v - 1) * abs_sta #max_k_v = 1.0〜max_k_v , ひとまずハンドル（前方カーブ予測含む）が10度で最大値になる。
     k_v = 1.0 if vv2 >= 75/3.6 else 1+ (1 - vv2 / (75/3.6))*(max_k_v-1) # 1〜0 -> 1〜max_k_v(75km/h以上はk_v=1)
 
-    if CT_get_lag_adjusted_curvature % 10 == 7: #書き出し頻度を1/10に
+    if False: #CT_get_lag_adjusted_curvature % 10 == 7: #書き出し頻度を1/10に
       try:
         with open('/storage/curvature_info.txt','w') as fp:
           fp.write('%.9f/%.3f' % (desired_curvature , k_v))
