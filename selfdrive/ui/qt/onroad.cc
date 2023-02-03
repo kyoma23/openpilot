@@ -41,7 +41,7 @@ OnroadWindow::OnroadWindow(QWidget *parent) : QWidget(parent) {
       buttons->setFixedWidth(w);
     }
   });
-  stacked_layout->addWidget(buttons);
+  //stacked_layout->addWidget(buttons);
 
   QWidget * split_wrapper = new QWidget;
   split = new QHBoxLayout(split_wrapper);
@@ -735,6 +735,7 @@ ExperimentalButton::ExperimentalButton(QWidget *parent) : QPushButton(parent) {
   experimental_img = loadPixmap("../assets/img_experimental.svg", {img_size, img_size});
 
   QObject::connect(this, &QPushButton::toggled, [=](bool checked) {
+    soundPipo();
     params.putBool("ExperimentalMode", checked);
   });
 }
