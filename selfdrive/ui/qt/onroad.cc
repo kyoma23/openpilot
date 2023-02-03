@@ -41,7 +41,7 @@ OnroadWindow::OnroadWindow(QWidget *parent) : QWidget(parent) {
       buttons->setFixedWidth(w);
     }
   });
-  //stacked_layout->addWidget(buttons); //これを有効にするとexperimental_btnにタッチイベントが行かない。
+  stacked_layout->addWidget(buttons); //これを有効にするとexperimental_btnにタッチイベントが行かない。
 
   QWidget * split_wrapper = new QWidget;
   split = new QHBoxLayout(split_wrapper);
@@ -336,7 +336,7 @@ ButtonsWindow::ButtonsWindow(QWidget *parent) : QWidget(parent) {
   QWidget *btns_wrapper00 = new QWidget;
   QHBoxLayout *btns_layout00  = new QHBoxLayout(btns_wrapper00);
   btns_layout00->setSpacing(0);
-  btns_layout00->setContentsMargins(0, 0, 0, 0);
+  btns_layout00->setContentsMargins(0, 100, 0, 0);
   main_layout->addWidget(btns_wrapper00, 0, 0); //Alignは何も指定しない。
 
   QWidget *btns_wrapper0L = new QWidget;
