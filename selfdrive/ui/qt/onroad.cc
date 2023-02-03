@@ -41,7 +41,7 @@ OnroadWindow::OnroadWindow(QWidget *parent) : QWidget(parent) {
       buttons->setFixedWidth(w);
     }
   });
-  //stacked_layout->addWidget(buttons);
+  //stacked_layout->addWidget(buttons); //これを有効にするとexperimental_btnにタッチイベントが行かない。
 
   QWidget * split_wrapper = new QWidget;
   split = new QHBoxLayout(split_wrapper);
@@ -735,7 +735,6 @@ ExperimentalButton::ExperimentalButton(QWidget *parent) : QPushButton(parent) {
   experimental_img = loadPixmap("../assets/img_experimental.svg", {img_size, img_size});
 
   QObject::connect(this, &QPushButton::toggled, [=](bool checked) {
-    soundPipo();
     params.putBool("ExperimentalMode", checked);
   });
 }
@@ -753,7 +752,7 @@ void ExperimentalButton::updateState(const UIState &s) {
   // disable button when experimental mode is not available, or has not been confirmed for the first time
   const auto cp = sm["carParams"].getCarParams();
   const bool experimental_mode_available = cp.getExperimentalLongitudinalAvailable() ? params.getBool("ExperimentalLongitudinalEnabled") : cp.getOpenpilotLongitudinalControl();
-  setEnabled(true || (params.getBool("ExperimentalModeConfirmed") && experimental_mode_available));
+  setEnabled(params.getBool("ExperimentalModeConfirmed") && experimental_mode_available);
 }
 
 void ExperimentalButton::paintEvent(QPaintEvent *event) {
