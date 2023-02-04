@@ -777,13 +777,9 @@ AnnotatedCameraWidget::AnnotatedCameraWidget(VisionStreamType type, QWidget* par
 
   QStackedLayout *base_layout  = new QStackedLayout(this);
   base_layout->setStackingMode(QStackedLayout::StackAll);
+  base_layout->setAlignment(this , Qt::AlignTop | Qt::AlignRight);
 
   experimental_btn = new ExperimentalButton(this);
-  QVBoxLayout *main_layout  = new QVBoxLayout(experimental_btn);
-  main_layout->setMargin(bdr_s);
-  main_layout->setSpacing(0);
-  main_layout->setAlignment(this , Qt::AlignTop | Qt::AlignRight);
-
 //  main_layout->addWidget(experimental_btn, 0, Qt::AlignTop | Qt::AlignRight);
   base_layout->addWidget(experimental_btn);
 
