@@ -23,26 +23,7 @@ OnroadWindow::OnroadWindow(QWidget *parent) : QWidget(parent) {
   main_layout->addLayout(stacked_layout);
 
   nvg = new AnnotatedCameraWidget(VISION_STREAM_ROAD, this);
-/*
-  buttons = new ButtonsWindow(this);
-  QObject::connect(uiState(), &UIState::uiUpdate, buttons, &ButtonsWindow::updateState);
-  QObject::connect(nvg, &AnnotatedCameraWidget::resizeSignal, [=](int w){
-    if(uiState()->scene.map_on_left && map){
-      //const int rect_w = rect().width();
-      const int rect_h = rect().height();
-      if((float)w / rect_h > 1.4f){
-        buttons->setContentsMargins(0,0,0,0);
-        buttons->setFixedWidth(w);
-      } else {
-        buttons->setContentsMargins(map->width(),0,0,0);
-        //ここでsetFixedWidthしないのは、直前のモード(全画面カメラ)のwを継続したいから。setFixedWidth(w+map->width())で同等。
-      }  
-    } else {
-      buttons->setFixedWidth(w);
-    }
-  });
-  //stacked_layout->addWidget(buttons); //これを有効にするとexperimental_btnにタッチイベントが行かない。
-*/
+
   QWidget * split_wrapper = new QWidget;
   split = new QHBoxLayout(split_wrapper);
   split->setContentsMargins(0, 0, 0, 0);
@@ -60,7 +41,6 @@ OnroadWindow::OnroadWindow(QWidget *parent) : QWidget(parent) {
   }
 
   stacked_layout->addWidget(split_wrapper);
-//  stacked_layout->addWidget(buttons); //AnnotatedCameraWidgetの後にButtonsWindowを登録するとどうなる？
 
   alerts = new OnroadAlerts(this);
   alerts->setAttribute(Qt::WA_TransparentForMouseEvents, true);
@@ -453,6 +433,13 @@ ButtonsWindow::ButtonsWindow(QWidget *parent) : QWidget(parent) {
           soundPipo();
         } else {
           soundPo();
+
+          UIState *s = uiState();
+          if((*s->sm)["controlsState"].getControlsState().getExperimentalMode()){
+            Params().putBool("ExperimentalMode", false);
+          } else {
+            Params().putBool("ExperimentalMode", true);
+          }
         }
       });
       int rect_width = 200;
@@ -730,7 +717,6 @@ ExperimentalButton::ExperimentalButton(QWidget *parent) : QPushButton(parent) {
   setVisible(false);
   setFixedSize(btn_size, btn_size);
   setCheckable(true);
-  setGeometry(100, 100, btn_size, btn_size);
 
   params = Params();
   engage_img = loadPixmap("../assets/img_chffr_wheel.png", {img_size, img_size});
@@ -776,16 +762,17 @@ void ExperimentalButton::paintEvent(QPaintEvent *event) {
 AnnotatedCameraWidget::AnnotatedCameraWidget(VisionStreamType type, QWidget* parent) : fps_filter(UI_FREQ, 3, 1. / UI_FREQ), CameraWidget("camerad", type, true, parent) {
   pm = std::make_unique<PubMaster, const std::initializer_list<const char *>>({"uiDebug"});
 
-  QStackedLayout *base_layout  = new QStackedLayout(this);
-  base_layout->setStackingMode(QStackedLayout::StackAll);
+  QVBoxLayout *main_layout  = new QVBoxLayout(this);
+/*
+  main_layout->setMargin(bdr_s);
+  main_layout->setSpacing(0);
 
   experimental_btn = new ExperimentalButton(this);
-//  main_layout->addWidget(experimental_btn, 0, Qt::AlignTop | Qt::AlignRight);
-  base_layout->addWidget(experimental_btn);
-
-  buttons = new ButtonsWindow(this); //ここならばexperimental_btnとイベントの両立ができ、マップの右画面のスクロール操作ができる。
+  main_layout->addWidget(experimental_btn, 0, Qt::AlignTop | Qt::AlignRight);
+*/
+  buttons = new ButtonsWindow(this); //ここならばexperimental_btnとイベントの両立ができ、マップの右画面のスクロール操作ができる。->ExperimentalButtonをLayoutで囲むとイベントが先に登録勝ちになってしまう。
   QObject::connect(uiState(), &UIState::uiUpdate, buttons, &ButtonsWindow::updateState);
-  base_layout->addWidget(buttons);
+  main_layout->addWidget(buttons);
 
   engage_img = loadPixmap("../assets/img_chffr_wheel.png", {img_size, img_size});
   experimental_img = loadPixmap("../assets/img_experimental.svg", {img_size - 5, img_size - 5});
@@ -873,7 +860,7 @@ void AnnotatedCameraWidget::updateState(const UIState &s) {
   setProperty("status", s.status);
 
   // update engageability/experimental mode button
-  experimental_btn->updateState(s);
+//  experimental_btn->updateState(s);
 
   // update DM icons at 2Hz
   if (sm.frame % (UI_FREQ / 2) == 0) {
