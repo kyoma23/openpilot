@@ -775,19 +775,21 @@ void ExperimentalButton::paintEvent(QPaintEvent *event) {
 AnnotatedCameraWidget::AnnotatedCameraWidget(VisionStreamType type, QWidget* parent) : fps_filter(UI_FREQ, 3, 1. / UI_FREQ), CameraWidget("camerad", type, true, parent) {
   pm = std::make_unique<PubMaster, const std::initializer_list<const char *>>({"uiDebug"});
 
-  QStackedLayout *main_layout  = new QStackedLayout(this);
-  main_layout->setStackingMode(QStackedLayout::StackAll);
-/*
+  QStackedLayout *base_layout  = new QStackedLayout(this);
+  base_layout->setStackingMode(QStackedLayout::StackAll);
+
+  QWidget *btn_w = new QWidget;
+  QVBoxLayout *main_layout  = new QVBoxLayout(btn_w);
   main_layout->setMargin(bdr_s);
   main_layout->setSpacing(0);
-*/
+
   experimental_btn = new ExperimentalButton(this);
-  //main_layout->addWidget(experimental_btn, 0, Qt::AlignTop | Qt::AlignRight);
-  main_layout->addWidget(experimental_btn);
+  main_layout->addWidget(experimental_btn, 0, Qt::AlignTop | Qt::AlignRight);
+  base_layout->addWidget(btn_w);
 
   buttons = new ButtonsWindow(this); //ここならばexperimental_btnとイベントの両立ができ、マップの右画面のスクロール操作ができる。
   QObject::connect(uiState(), &UIState::uiUpdate, buttons, &ButtonsWindow::updateState);
-  main_layout->addWidget(buttons);
+  base_layout->addWidget(buttons);
 
   engage_img = loadPixmap("../assets/img_chffr_wheel.png", {img_size, img_size});
   experimental_img = loadPixmap("../assets/img_experimental.svg", {img_size - 5, img_size - 5});
@@ -875,7 +877,7 @@ void AnnotatedCameraWidget::updateState(const UIState &s) {
   setProperty("status", s.status);
 
   // update engageability/experimental mode button
-//  experimental_btn->updateState(s);
+  experimental_btn->updateState(s);
 
   // update DM icons at 2Hz
   if (sm.frame % (UI_FREQ / 2) == 0) {
