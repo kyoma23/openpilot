@@ -730,6 +730,7 @@ ExperimentalButton::ExperimentalButton(QWidget *parent) : QPushButton(parent) {
   setVisible(false);
   setFixedSize(btn_size, btn_size);
   setCheckable(true);
+  setGeometry(100, 100, btn_size, btn_size);
 
   params = Params();
   engage_img = loadPixmap("../assets/img_chffr_wheel.png", {img_size, img_size});
@@ -777,7 +778,6 @@ AnnotatedCameraWidget::AnnotatedCameraWidget(VisionStreamType type, QWidget* par
 
   QStackedLayout *base_layout  = new QStackedLayout(this);
   base_layout->setStackingMode(QStackedLayout::StackAll);
-  base_layout->setAlignment(this , Qt::AlignTop | Qt::AlignRight);
 
   experimental_btn = new ExperimentalButton(this);
 //  main_layout->addWidget(experimental_btn, 0, Qt::AlignTop | Qt::AlignRight);
