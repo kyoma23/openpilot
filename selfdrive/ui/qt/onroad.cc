@@ -778,14 +778,14 @@ AnnotatedCameraWidget::AnnotatedCameraWidget(VisionStreamType type, QWidget* par
   QStackedLayout *base_layout  = new QStackedLayout(this);
   base_layout->setStackingMode(QStackedLayout::StackAll);
 
-  QWidget *btn_w = new QWidget;
-  QVBoxLayout *main_layout  = new QVBoxLayout(btn_w);
+  experimental_btn = new ExperimentalButton(this);
+  QVBoxLayout *main_layout  = new QVBoxLayout(experimental_btn);
   main_layout->setMargin(bdr_s);
   main_layout->setSpacing(0);
+  main_layout->setAlignment(this , Qt::AlignTop | Qt::AlignRight);
 
-  experimental_btn = new ExperimentalButton(this);
-  main_layout->addWidget(experimental_btn, 0, Qt::AlignTop | Qt::AlignRight);
-  base_layout->addWidget(btn_w);
+//  main_layout->addWidget(experimental_btn, 0, Qt::AlignTop | Qt::AlignRight);
+  base_layout->addWidget(experimental_btn);
 
   buttons = new ButtonsWindow(this); //ここならばexperimental_btnとイベントの両立ができ、マップの右画面のスクロール操作ができる。
   QObject::connect(uiState(), &UIState::uiUpdate, buttons, &ButtonsWindow::updateState);
