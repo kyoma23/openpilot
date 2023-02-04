@@ -432,7 +432,7 @@ ButtonsWindow::ButtonsWindow(QWidget *parent) : QWidget(parent) {
   QWidget *btns_wrapper0U = new QWidget;
   QVBoxLayout *btns_layout0U  = new QVBoxLayout(btns_wrapper0U);
   btns_layout0U->setSpacing(0);
-  btns_layout0U->setContentsMargins(0, 430-200-45, 0, 0);
+  btns_layout0U->setContentsMargins(0, 430-200-100, 0, 0);
   btns_layout00->addWidget(btns_wrapper0U, 0, Qt::AlignTop);
 
   {
@@ -2298,11 +2298,11 @@ void AnnotatedCameraWidget::paintGL() {
   const cereal::ModelDataV2::Reader &model = sm["modelV2"].getModelV2();
   const cereal::RadarState::Reader &radar_state = sm["radarState"].getRadarState();
 
-  const int _width = width();  // for ButtonsWindow
-  if (prev_width != _width) {
-    emit resizeSignal(_width);
-    prev_width = _width;
-  }
+  // const int _width = width();  // for ButtonsWindow
+  // if (prev_width != _width) {
+  //   emit resizeSignal(_width);
+  //   prev_width = _width;
+  // }
       
   // draw camera frame
   {
