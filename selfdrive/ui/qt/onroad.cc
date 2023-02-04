@@ -775,7 +775,7 @@ void ExperimentalButton::paintEvent(QPaintEvent *event) {
 AnnotatedCameraWidget::AnnotatedCameraWidget(VisionStreamType type, QWidget* parent) : fps_filter(UI_FREQ, 3, 1. / UI_FREQ), CameraWidget("camerad", type, true, parent) {
   pm = std::make_unique<PubMaster, const std::initializer_list<const char *>>({"uiDebug"});
 
-  QStackLayout *main_layout  = new QStackedLayout(this);
+  QStackedLayout *main_layout  = new QStackedLayout(this);
   main_layout->setStackingMode(QStackedLayout::StackAll);
 /*
   main_layout->setMargin(bdr_s);
