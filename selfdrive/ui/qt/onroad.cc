@@ -782,6 +782,10 @@ AnnotatedCameraWidget::AnnotatedCameraWidget(VisionStreamType type, QWidget* par
   experimental_btn = new ExperimentalButton(this);
   main_layout->addWidget(experimental_btn, 0, Qt::AlignTop | Qt::AlignRight);
 
+  buttons = new ButtonsWindow(this);
+  QObject::connect(uiState(), &UIState::uiUpdate, buttons, &ButtonsWindow::updateState);
+  main_layout->addWidget(buttons);
+
   engage_img = loadPixmap("../assets/img_chffr_wheel.png", {img_size, img_size});
   experimental_img = loadPixmap("../assets/img_experimental.svg", {img_size - 5, img_size - 5});
   dm_img = loadPixmap("../assets/img_driver_face.png", {img_size, img_size});
