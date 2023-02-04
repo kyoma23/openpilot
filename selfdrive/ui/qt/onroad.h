@@ -108,6 +108,7 @@ private:
   void drawText(QPainter &p, int x, int y, const QString &text, int alpha = 255 , bool brakeLight = false);
   void drawText(QPainter &p, int x, int y, const QString &text, const QColor &col);
 
+  ButtonsWindow *buttons;
   QPixmap engage_img;
   QPixmap experimental_img;
   ExperimentalButton *experimental_btn;
@@ -169,7 +170,7 @@ private:
   void mousePressEvent(QMouseEvent* e) override;
   OnroadAlerts *alerts;
   AnnotatedCameraWidget *nvg;
-  ButtonsWindow *buttons;
+//  ButtonsWindow *buttons;
   QColor bg = bg_colors[STATUS_DISENGAGED];
   QWidget *map = nullptr;
   QHBoxLayout* split;

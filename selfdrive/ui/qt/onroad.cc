@@ -23,7 +23,7 @@ OnroadWindow::OnroadWindow(QWidget *parent) : QWidget(parent) {
   main_layout->addLayout(stacked_layout);
 
   nvg = new AnnotatedCameraWidget(VISION_STREAM_ROAD, this);
-
+/*
   buttons = new ButtonsWindow(this);
   QObject::connect(uiState(), &UIState::uiUpdate, buttons, &ButtonsWindow::updateState);
   QObject::connect(nvg, &AnnotatedCameraWidget::resizeSignal, [=](int w){
@@ -42,7 +42,7 @@ OnroadWindow::OnroadWindow(QWidget *parent) : QWidget(parent) {
     }
   });
   //stacked_layout->addWidget(buttons); //これを有効にするとexperimental_btnにタッチイベントが行かない。
-
+*/
   QWidget * split_wrapper = new QWidget;
   split = new QHBoxLayout(split_wrapper);
   split->setContentsMargins(0, 0, 0, 0);
@@ -60,7 +60,7 @@ OnroadWindow::OnroadWindow(QWidget *parent) : QWidget(parent) {
   }
 
   stacked_layout->addWidget(split_wrapper);
-  stacked_layout->addWidget(buttons); //AnnotatedCameraWidgetの後にButtonsWindowを登録するとどうなる？
+//  stacked_layout->addWidget(buttons); //AnnotatedCameraWidgetの後にButtonsWindowを登録するとどうなる？
 
   alerts = new OnroadAlerts(this);
   alerts->setAttribute(Qt::WA_TransparentForMouseEvents, true);
