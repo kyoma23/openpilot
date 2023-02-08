@@ -768,7 +768,7 @@ location set</source>
     </message>
     <message>
         <source>GOOD</source>
-        <translation>좋음</translation>
+        <translation type="vanished">좋음</translation>
     </message>
     <message>
         <source>OK</source>

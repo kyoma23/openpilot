@@ -768,7 +768,7 @@ location set</source>
     </message>
     <message>
         <source>GOOD</source>
-        <translation>正常</translation>
+        <translation type="vanished">正常</translation>
     </message>
     <message>
         <source>OK</source>
