@@ -744,7 +744,7 @@ location set</source>
     </message>
     <message>
         <source>GOOD</source>
-        <translation>最適</translation>
+        <translation type="vanished">最適</translation>
     </message>
     <message>
         <source>OK</source>

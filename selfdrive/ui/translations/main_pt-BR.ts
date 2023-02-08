@@ -748,7 +748,7 @@ trabalho definido</translation>
     </message>
     <message>
         <source>GOOD</source>
-        <translation>BOA</translation>
+        <translation type="vanished">BOA</translation>
     </message>
     <message>
         <source>OK</source>
