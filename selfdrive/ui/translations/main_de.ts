@@ -747,7 +747,7 @@ location set</source>
     </message>
     <message>
         <source>GOOD</source>
-        <translation type="vanished">GUT</translation>
+        <translation>GUT</translation>
     </message>
     <message>
         <source>OK</source>
