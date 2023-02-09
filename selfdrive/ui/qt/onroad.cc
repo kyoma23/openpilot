@@ -1797,7 +1797,7 @@ void AnnotatedCameraWidget::knightScanner(QPainter &p) {
   float hha = 0;
   if(vc_accel > 0){
     hha = 1 - 0.1 / vc_accel;
-    p.setBrush(QColor(0, 245, 0, 200));
+    p.setBrush(QColor(0.09*255, 0.945*255, 0.26*255, 200));
   }
   if(vc_accel < 0){
     hha = 1 + 0.1 / vc_accel;
@@ -1854,7 +1854,7 @@ void AnnotatedCameraWidget::knightScanner(QPainter &p) {
     if(h2 > h){
       //増加
       p.drawRect(QRect(0 , rect_h - h , wp1 , h));
-      p.setBrush(QColor(0, 245, 0, 200));
+      p.setBrush(QColor(0.09*255, 0.945*255, 0.26*255, 200));
       //p.drawRect(QRect(wp1 , rect_h - h2 , wpa , h2-h));
       p.drawRect(QRect(0 , rect_h - h2 , wp1 , h2-h));
     } else if(h2 <= h){ // == も含める
@@ -2023,7 +2023,7 @@ void AnnotatedCameraWidget::drawLead(QPainter &painter, const cereal::RadarState
     painter.drawText(QRect(x+lock_indicator_dx, y-50, str_w, 50), Qt::AlignBottom | Qt::AlignLeft, dist);
     if(global_a_rel >= global_a_rel_col){
       global_a_rel_col = -0.1; //散らつきを抑えるバッファ。
-      painter.setPen(QColor(0, 245, 0, 255));
+      painter.setPen(QColor(0.09*255, 0.945*255, 0.26*255, 255));
     } else {
       global_a_rel_col = 0;
       painter.setPen(QColor(245, 0, 0, 255));
@@ -2074,7 +2074,7 @@ void AnnotatedCameraWidget::drawLockon(QPainter &painter, const cereal::ModelDat
   }
   prob_alpha *= 245;
 
-  painter.setPen(QPen(QColor(0, 245, 0, prob_alpha), 2));
+  painter.setPen(QPen(QColor(0.09*255, 0.945*255, 0.26*255, prob_alpha), 2));
   painter.setBrush(QColor(0, 0, 0, 0));
   float ww = 300 , hh = 300;
   if(Hardware::TICI()){
@@ -2135,10 +2135,10 @@ void AnnotatedCameraWidget::drawLockon(QPainter &painter, const cereal::ModelDat
   configFont(painter, FONT_OPEN_SANS, 38, "SemiBold");
   if(num == 0 && uiState()->scene.mLockOnButton){
     //推論1番
-    painter.setPen(QPen(QColor(0, 245, 0, prob_alpha), 2));
+    painter.setPen(QPen(QColor(0.09*255, 0.945*255, 0.26*255, prob_alpha), 2));
     painter.drawRect(r);
 
-    //painter.setPen(QPen(QColor(0, 245, 0, prob_alpha), 2));
+    //painter.setPen(QPen(QColor(0.09*255, 0.945*255, 0.26*255, prob_alpha), 2));
     if(leadcar_lockon[0].x > leadcar_lockon[1].x - 20){
       leadcar_lockon[num].lxt = leadcar_lockon[num].lxt + (r.right() - leadcar_lockon[num].lxt) / 20;
       leadcar_lockon[num].lxf = leadcar_lockon[num].lxf + (width() - leadcar_lockon[num].lxf) / 20;
@@ -2176,7 +2176,7 @@ void AnnotatedCameraWidget::drawLockon(QPainter &painter, const cereal::ModelDat
       float hha = 0;
       if(a_rel > 0){
         hha = 1 - 0.1 / a_rel;
-        painter.setBrush(QColor(0, 245, 0, prob_alpha*0.9));
+        painter.setBrush(QColor(0.09*255, 0.945*255, 0.26*255, prob_alpha*0.9));
 
         if(hha < 0){
           hha = 0;
@@ -2233,7 +2233,7 @@ void AnnotatedCameraWidget::drawLockon(QPainter &painter, const cereal::ModelDat
 
       float tlw = 8;
       float tlw_2 = tlw / 2;
-      painter.setPen(QPen(QColor(0, 245, 0, prob_alpha), tlw));
+      painter.setPen(QPen(QColor(0.09*255, 0.945*255, 0.26*255, prob_alpha), tlw));
       painter.drawLine(r.center().x() , r.top()-tlw_2 , r.center().x() , r.top() - td);
       painter.drawLine(r.left()-tlw_2 , r.center().y() , r.left() - td , r.center().y());
       painter.drawLine(r.right()+tlw_2 , r.center().y() , r.right() + td , r.center().y());
@@ -2252,12 +2252,12 @@ void AnnotatedCameraWidget::drawLockon(QPainter &painter, const cereal::ModelDat
       ){
         //painter.setPen(QPen(QColor(245, 0, 0, prob_alpha), 4));
         //painter.drawEllipse(r); //縁を描く
-        //painter.setPen(QPen(QColor(0, 245, 0, prob_alpha), 1)); //文字を後で書くために色を再設定。->文字は赤でもいいや
+        //painter.setPen(QPen(QColor(0.09*255, 0.945*255, 0.26*255, prob_alpha), 1)); //文字を後で書くために色を再設定。->文字は赤でもいいや
 
         //円を（意味不明だから）書かないで、枠ごと赤くする。推論1が推論と別のものを捉えてるのを簡単に認識できる。
         painter.setPen(QPen(QColor(245, 0, 0, prob_alpha), 2));
       } else {
-        painter.setPen(QPen(QColor(0, 245, 0, prob_alpha), 2));
+        painter.setPen(QPen(QColor(0.09*255, 0.945*255, 0.26*255, prob_alpha), 2));
       }
 
       if(leadcar_lockon[0].x > leadcar_lockon[1].x - 20){ //多少逆転しても許容する
@@ -2285,18 +2285,18 @@ void AnnotatedCameraWidget::drawLockon(QPainter &painter, const cereal::ModelDat
     } else if(num == 2){
       //推論3番
       //事実上ない。動かない0,0に居るみたい？
-      painter.setPen(QPen(QColor(0, 245, 0, prob_alpha), 2));
+      painter.setPen(QPen(QColor(0.09*255, 0.945*255, 0.26*255, prob_alpha), 2));
       //painter.drawLine(r.right(),r.center().y() , width() , height());
     } else {
       //推論4番以降。
       //存在していない。
-      painter.setPen(QPen(QColor(0, 245, 0, prob_alpha), 2));
+      painter.setPen(QPen(QColor(0.09*255, 0.945*255, 0.26*255, prob_alpha), 2));
       //painter.drawLine(r.left(),r.center().y() , 0 , height());
     }
 
     painter.drawRect(r);
 
-    //painter.setPen(QPen(QColor(0, 245, 0, prob_alpha), 2));
+    //painter.setPen(QPen(QColor(0.09*255, 0.945*255, 0.26*255, prob_alpha), 2));
 
     if(ww >= 80){
       //ここではy0,y1を参照できない。
