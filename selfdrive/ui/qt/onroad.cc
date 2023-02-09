@@ -1570,10 +1570,10 @@ void AnnotatedCameraWidget::drawDriverState(QPainter &painter, const UIState *s)
   int x = false /*rightHandDM*/ ? rect().right() -  (btn_size - 24) / 2 - (bdr_s * 2) : (btn_size - 24) / 2 + (bdr_s * 2);
   int y = rect().bottom() - footer_h / 2;
   float opacity = dmActive ? 0.65 : 0.2;
-  drawIcon(painter, x, y, dm_img, blackColor(0), opacity);
+  drawIcon(painter, x, y, dm_img, blackColor(0), opacity , 0);
   if(rightHandDM){ //ボタンを移動できないので、アイコンはそのまま、左肩に"R"を表示。
-    configFont(p, FONT_OPEN_SANS, 70, "Bold");
-    drawText(p, x - btn_size / 2, y - btn_size / 4, "R" , dmActive ? 200 : 100);
+    configFont(painter, FONT_OPEN_SANS, 70, "Bold");
+    drawText(painter, x - btn_size / 2, y - btn_size / 4, "R" , dmActive ? 200 : 100);
   }
 
   // circle background
