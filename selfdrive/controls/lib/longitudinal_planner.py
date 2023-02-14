@@ -131,6 +131,13 @@ class LongitudinalPlanner:
     except Exception as e:
       pass
 
+    if os.environ['DONGLE_ID'] in ('cdcb457f7528673b'):
+      self.dexp_mode_min = 35/3.6
+      self.dexp_mode_max = 39/3.6
+    else:
+      self.dexp_mode_min = 20/3.6
+      self.dexp_mode_max = 25/3.6
+
     if self.CP.carFingerprint not in TSS2_CAR:
       LIMIT_VC_A ,LIMIT_VC_B ,LIMIT_VC_C  = calc_limit_vc(8.7,13.6,57.0 , 92-4      ,65.5-4      ,31.0      ) #ハンドル60度で時速30km/h程度まで下げる設定。
       
@@ -167,12 +174,12 @@ class LongitudinalPlanner:
       pass
     if dexp_mode:
       if self.mpc.mode == 'acc':
-        if v_ego <= 20/3.6 and sm['carState'].gasPressed == False:
+        if v_ego <= self.dexp_mode_min and sm['carState'].gasPressed == False:
           params.put_bool("ExperimentalMode", True) # blended
           with open('/tmp/long_speeddown_disable.txt','w') as fp:
             fp.write('%d' % (1)) #イチロウロング無効
       else:
-        if v_ego > 25/3.6 or sm['carState'].gasPressed == True:
+        if v_ego > self.dexp_mode_max or sm['carState'].gasPressed == True:
           params.put_bool("ExperimentalMode", False) # acc
           with open('/tmp/long_speeddown_disable.txt','w') as fp:
             fp.write('%d' % (0)) #イチロウロング有効
