@@ -446,8 +446,6 @@ class LongitudinalPlanner:
               accel_engaged_str = fp.read()
               if accel_engaged_str:
                 if int(accel_engaged_str) == 3: #ワンペダルモード
-                  with open('/tmp/signal_start_prompt_info.txt','w') as fp:
-                    fp.write('%d' % (1)) #prompt.wav音を鳴らしてみる。
                     # fp.write('%d' % (3)) #デバッグ用にpo.wavを鳴らしてみる。
                   lock_off = False
                   if os.path.isfile('/tmp/lockon_disp_disable.txt'):
@@ -458,6 +456,8 @@ class LongitudinalPlanner:
                         if lockon_disp_disable != 0:
                           lock_off = True #ロックオンOFFで停車コードOFF
                   if lock_off == False:
+                    with open('/tmp/signal_start_prompt_info.txt','w') as fp:
+                      fp.write('%d' % (1)) #prompt.wav音を鳴らしてみる。
                     OP_ENABLE_v_cruise_kph = v_cruise_kph
                     OP_ENABLE_gas_speed = 1.0 / 3.6
                     #one_pedal_chenge_restrict_time = 10 , ここは意味的に要らないか。
